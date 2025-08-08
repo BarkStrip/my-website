@@ -16,21 +16,18 @@ export default function Home() {
   /* Projects Data */
   const projects = [
     {
-      year: "2025 - Present",
       title: "AI-Powered PDF Chatbot",
       description: "Built intelligent document Q&A system using RAG architecture with LangChain for PDF processing and text chunking, OpenAI embeddings for semantic search, Supabase vector database for document storage and retrieval, and GPT-4 integration for contextual responses. Deployed with Vercel. [In Progress]",
       link: "https://github.com/BarkStrip/Rag-Chabot",
       demo: "https://barekstripling-chabot.vercel.app/"
     },
     {
-      year: "2022",
       title: "Weather Forecast Webpage",
       description: "Built full-stack web application using web scraping to fetch weather data, MySQL database to store weather information, and PHP to create intelligent data refresh system",
       link: "https://github.com/BarkStrip/WeatherDashboard",
       demo: ""
     },
     {
-      year: "2021",
       title: "Tic Tac Toe Game",
       description: "Developed desktop game using Java and Swing GUI with separated game logic, interface, and settings components",
       link: "https://github.com/BarkStrip/Tic-Tac-Toe",
@@ -117,7 +114,6 @@ export default function Home() {
                     : 'opacity-0 translate-y-75'
                     }`}
                 >
-                  <p className="text-sm mb-1 opacity-60">{project.year}</p>
                   <h3 className="text-lg md:text-xl font-medium mb-2">
                     {project.title}
                   </h3>
