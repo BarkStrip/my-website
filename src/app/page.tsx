@@ -9,7 +9,6 @@ export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showProjects, setShowProjects] = useState(false);
   const [visibleProjects, setVisibleProjects] = useState<number[]>([]);
-  const [imagePositions, setImagePositions] = useState<number[]>([]);
   const [showImages, setShowImages] = useState<number[]>([]);
 
   /* Refs for project alignment */
@@ -81,46 +80,6 @@ export default function Home() {
     });
   }, [visibleProjects]);
 
-  /* Update image positions when projects become visible */
-  useEffect(() => {
-    const updatePositions = () => {
-      const positions = projectRefs.current.map((ref) => {
-        if (ref) {
-          const rect = ref.getBoundingClientRect();
-          return rect.top + window.scrollY - (window.innerHeight * 0.2);
-        }
-        return 0;
-      });
-      setImagePositions(positions);
-    };
-
-    if (visibleProjects.length > 0) {
-      // Longer delay to ensure animations are complete
-      setTimeout(updatePositions, 500);
-
-      // Also update on window resize
-      window.addEventListener('resize', updatePositions);
-      return () => window.removeEventListener('resize', updatePositions);
-    }
-  }, [visibleProjects]);
-
-  /* Additional effect to recalculate positions after all animations */
-  useEffect(() => {
-    if (visibleProjects.length === projects.length) {
-      const finalUpdate = () => {
-        const positions = projectRefs.current.map((ref) => {
-          if (ref) {
-            const rect = ref.getBoundingClientRect();
-            return rect.top + window.scrollY;
-          }
-          return 0;
-        });
-        setImagePositions(positions);
-      };
-
-      setTimeout(finalUpdate, 1000);
-    }
-  }, [visibleProjects.length, projects.length]);
 
   return (
     <div className="w-full min-h-screen flex flex-col overflow-x-hidden">
@@ -220,7 +179,7 @@ export default function Home() {
           {projects.map((project, index) => {
             const projectElement = projectRefs.current[index];
             const topOffset = projectElement ?
-              projectElement.getBoundingClientRect().top + window.scrollY - (window.innerHeight * 0.2) :
+              projectElement.offsetTop - (window.innerHeight * 0.2) :
               index * 200;
 
             return (
